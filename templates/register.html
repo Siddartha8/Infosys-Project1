@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: black;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      display: flex;
+      background: none;
+      box-shadow: none;
+      max-width: 900px;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .image-box img {
+      max-width: 400px;
+      border-radius: 12px;
+    }
+
+    .form-box {
+      background: #1e1e1e;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      width: 350px;
+      color: white;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: white;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0 5px 0;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      background: #2c2c2c;
+      color: white;
+      outline: none;
+      box-sizing: border-box;
+    }
+
+    .error {
+      border: 2px solid #dc3545 !important;
+    }
+
+    .error-message {
+      color: #dc3545;
+      font-size: 13px;
+      margin-bottom: 10px;
+      display: none; /* hidden by default */
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(90deg, #43cea2, #185a9d);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      transition: 0.3s;
+    }
+
+    p {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    a {
+      color: #43cea2;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Image -->
+    <div class="image-box">
+      <img src="{{ url_for('static', filename='images/Wavy_Tech-28_Single-10.jpg') }}" alt="Register Illustration">
+    </div>
+
+    <!-- Register Form -->
+    <div class="form-box">
+      <h2>Register</h2>
+      <form id="registerForm" method="POST" action="{{ url_for('register') }}">
+        <input type="text" id="username" name="username" placeholder="Enter your username">
+        <div id="usernameError" class="error-message">⚠ Username is required</div>
+
+        <input type="email" id="email" name="email" placeholder="Enter your email">
+        <div id="emailError" class="error-message">⚠ Email is required</div>
+
+        <input type="password" id="password" name="password" placeholder="Create a password">
+        <div id="passwordError" class="error-message">⚠ Password is required</div>
+
+        <button type="submit">Register</button>
+      </form>
+      <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("registerForm").addEventListener("submit", function(event) {
+      let valid = true;
+
+      function checkField(id, errorId) {
+        let input = document.getElementById(id);
+        let error = document.getElementById(errorId);
+        if (input.value.trim() === "") {
+          input.classList.add("error");
+          error.style.display = "block";
+          valid = false;
+        } else {
+          input.classList.remove("error");
+          error.style.display = "none";
+        }
+      }
+
+      checkField("username", "usernameError");
+      checkField("email", "emailError");
+      checkField("password", "passwordError");
+
+      if (!valid) event.preventDefault();
+    });
+  </script>
+</body>
+</html>

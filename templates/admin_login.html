@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: url("{{ url_for('static', filename='images/10241279.jpg') }}") no-repeat center center fixed;
+      background-size: cover;
+      display: flex; justify-content: center; align-items: center;
+      height: 100vh; margin: 0;
+    }
+
+    .container {
+      background: rgba(0,0,0,0.85);
+      padding: 40px; border-radius: 15px;
+      text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+      color: #fff; width: 380px;
+    }
+
+    .container img {
+      width: 80px; height: 80px;
+      margin-bottom: 15px;
+      border-radius: 50%;
+      border: 2px solid #43cea2;
+      box-shadow: 0 0 12px rgba(67, 206, 162, 0.8);
+    }
+
+    h2 { margin-bottom: 20px; letter-spacing: 1px; }
+
+    input {
+      width: 100%; padding: 12px; margin: 10px 0 5px 0;
+      border: none; border-radius: 8px;
+      background: #2c2c2c; color: #fff;
+      box-sizing: border-box;
+    }
+
+    input.error {
+      border: 2px solid #dc3545;
+    }
+
+    .error-message {
+      color: #dc3545;
+      font-size: 13px;
+      margin-bottom: 8px;
+      display: none;
+      text-align: left;
+    }
+
+    input::placeholder { color: #bbb; }
+
+    button {
+      width: 100%; padding: 12px;
+      background: linear-gradient(90deg, #43cea2, #185a9d);
+      border: none; border-radius: 8px; color: #fff;
+      font-size: 16px; cursor: pointer;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+    button:hover { background: linear-gradient(90deg, #2b8e70, #144a75); transform: scale(1.05); }
+
+    /* Flash error box */
+    .flash-danger {
+      background: #f8d7da; color: #721c24;
+      padding: 10px; border-radius: 6px; margin-bottom: 10px;
+      border: 1px solid #f5c6cb;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Logo -->
+    <img src="{{ url_for('static', filename='images/10241279.jpg') }}" alt="Admin Logo">
+
+    <h2>Admin Login</h2>
+
+    <!-- Flash message -->
+    {% with messages = get_flashed_messages(category_filter=['danger']) %}
+      {% if messages %}
+        <div class="flash-danger">{{ messages[0] }}</div>
+      {% endif %}
+    {% endwith %}
+
+    <form id="adminLoginForm" method="POST" action="{{ url_for('admin_login') }}">
+      <input type="text" id="username" name="username" placeholder="Enter Admin Username">
+      <div id="usernameError" class="error-message">⚠ Username is required</div>
+
+      <input type="password" id="password" name="password" placeholder="Enter Admin Password">
+      <div id="passwordError" class="error-message">⚠ Password is required</div>
+
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("adminLoginForm").addEventListener("submit", function(event) {
+      let valid = true;
+
+      function validateField(id, errorId) {
+        let input = document.getElementById(id);
+        let error = document.getElementById(errorId);
+        if (input.value.trim() === "") {
+          input.classList.add("error");
+          error.style.display = "block";
+          valid = false;
+        } else {
+          input.classList.remove("error");
+          error.style.display = "none";
+        }
+      }
+
+      validateField("username", "usernameError");
+      validateField("password", "passwordError");
+
+      if (!valid) event.preventDefault();
+    });
+  </script>
+</body>
+</html>

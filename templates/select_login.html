@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Select Login - ReviewSense</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #0d1117, #161b22);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 85%;
+      max-width: 1200px;
+      gap: 50px;
+    }
+
+    /* Left Section */
+    .text-section {
+      flex: 1;
+    }
+
+    .text-section h1 {
+      font-size: 2.8rem;
+      margin-bottom: 15px;
+    }
+
+    .text-section p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #c9d1d9;
+      margin-bottom: 25px;
+    }
+
+    .illustration img {
+      max-width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Right Login Box */
+    .login-box {
+      background: #1f2937;
+      padding: 35px;
+      border-radius: 15px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      width: 350px;
+    }
+
+    .login-box h2 {
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-user {
+      background: linear-gradient(135deg, #43cea2, #185a9d);
+      color: white;
+    }
+
+    .btn-user:hover {
+      transform: scale(1.05);
+    }
+
+    .btn-admin {
+      background: linear-gradient(135deg, #ff416c, #ff4b2b);
+      color: white;
+    }
+
+    .btn-admin:hover {
+      transform: scale(1.05);
+    }
+
+    .signup {
+      margin-top: 15px;
+      font-size: 0.9rem;
+      color: #c9d1d9;
+    }
+
+    .signup a {
+      color: #3b82f6;
+      text-decoration: none;
+    }
+
+    .signup a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Left side text + image -->
+    <div class="text-section">
+      <h1>ReviewSense</h1>
+      <p>
+        ReviewSense helps you understand customer feedback by analyzing reviews with AI. 
+        Login as a User to explore insights or as an Admin to manage and monitor feedback.
+      </p>
+      <div class="illustration">
+        <img src="{{ url_for('static', filename='images/5385893.jpg') }}" alt="Review Illustration">
+      </div>
+    </div>
+
+    <!-- Right side login box -->
+    <div class="login-box">
+      <h2>Welcome 👋</h2>
+      <a href="/login"><button class="btn btn-user">Login as User</button></a>
+      <a href="/admin_login"><button class="btn btn-admin">Login as Admin</button></a>
+      
+      </div>
+    </div>
+  </div>
+</body>
+</html>
