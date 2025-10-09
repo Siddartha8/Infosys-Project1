@@ -1,114 +1,192 @@
+Infosys-Project1: Customer Review Insight AI
 📌 Project Overview
-This is a comprehensive web application designed to collect, store, and analyze user reviews using Sentiment Analysis. It provides dedicated interfaces for both standard users (for submission and viewing personal history) and administrators (for system-wide monitoring and data management).
 
-The application is built using the Python ecosystem, adhering to a modular structure for scalability and maintainability.
+Customer Review Insight AI is an advanced Natural Language Processing (NLP) system developed during the Infosys Internship 6.0 that addresses the challenge of manually extracting actionable insights from large volumes of customer reviews.
 
-✨ Key Features
-Secure User & Admin Authentication: Separate login and registration flows for users and system administrators.
 
-Database Management: Uses SQLite for data persistence, with Alembic ensuring safe and version-controlled database migrations.
+Unlike traditional sentiment analysis, which only provides an overall positive or negative score, this project performs Aspect-Based Sentiment Analysis (ABSA). The goal is to identify specific product features or attributes (aspects) and determine the sentiment (positive, negative, or neutral) associated with each one, providing granular, data-driven insights for businesses.
 
-Sentiment Analysis Engine: A core utility module that processes raw text input and determines its emotional tone (e.g., Positive, Negative, Neutral).
 
-Modular Design: Clear separation between web logic (app.py), database models (models.py), and utility functions (utils/).
+Team Members & Supervision
 
-Dedicated Dashboards: Separate user interface designs for general users (dashboard.html) and system admins (admin_dashboard.html).
+Team Members: Aryan Amit Pardeshi, Vinukollu Hima Janani, Kandadi Siddartha, Akasapu Venkata Sai Manikanta Gangadhar Dharshan.
 
-🛠️ Technology Stack
-Category	Technology	Key Components
-Backend	Python 3.x	app.py, models.py, utils/
-Web Framework	Flask or Django (Inferred)	Routing and Template Rendering (templates/)
-Database	SQLite	Stored in instance/admin.db and instance/reviews.db
-DB Migrations	Alembic	migrations/, alembic.ini, env.py
-NLP/ML	NLTK / TextBlob / scikit-learn (Inferred)	utils/sentiment.py, utils/text_utils.py
-Frontend	HTML5, CSS, Jinja Templating	templates/, static/
+
+Supervisor: Mukilan Selvaraj.
+
+✨ Core Features & Functionality
+The application is structured around the following key modules and features:
+
+Module	Features	Benefit
+NLP Analysis Module		
+Aspect Extraction, Overall Sentiment Analysis, and Aspect-Based Sentiment Analysis using Hugging Face, VADER, and spaCy.
+
+
+Provides granular sentiment insights towards specific aspects.
+
+Data Ingestion	
+Interface for uploading review datasets in CSV or text file format.
+
+
+Automated Review Analysis to significantly reduce manual effort.
+
+Authentication & Security	
+User registration and login secured with JWT Authentication.
+
+
+
+
+Secure management of user profiles, datasets, and analysis reports.
+
+Visualization & Reporting		
+Interactive dashboards (built with Streamlit, Dash, or Plotly) showing sentiment trends over time and aspect-level distribution.
+
+
+
+Delivers Actionable Business Intelligence in a digestible format.
+
+
+
+Admin Dashboard	
+Management of review categories/industries, system usage monitoring, and review of analysis quality.
+
+
+
+Enables effective system maintenance and strategic management of aspect categories.
+
 
 Export to Sheets
-🚀 Getting Started
-Follow these steps to set up and run the project locally.
+🛠️ Technical Architecture & Stack
+The project relies on a powerful and modern Python stack:
 
+Category	Technology	Files/Dependencies
+Backend Framework		
+Flask / Python 
+
+app.py, templates/
+NLP Libraries		
+NLTK, spaCy, Hugging Face Transformers 
+
+utils/sentiment.py, utils/text_utils.py
+Visualization		
+Streamlit, Dash, or Plotly 
+
+Used for interactive dashboards and reporting.
+Data Processing		
+Pandas 
+
+Used for data cleaning, aggregation, and insight generation.
+
+
+Database/ORM		
+SQLAlchemy  (with Alembic migrations)
+
+models.py, instance/, migrations/
+Security		
+JWT Authentication 
+
+For securing user and admin sessions.
+Deployment	
+Docker, Cloud Platforms (Future) 
+
+
+Export to Sheets
+📅 Implementation Timeline
+The project was executed across four distinct milestones (weeks 1-8):
+
+Milestone	Weeks	Key Activities
+Milestone 1	
+Weeks 1-2 
+
+Developed secure user authentication with JWT, login, and profile management. Enabled review data upload via Flask/Streamlit supporting CSV and text inputs.
+
+
+
+Milestone 2	
+Weeks 3-4 
+
+Implemented a text preprocessing pipeline with NLTK and spaCy. Enhanced the UI to display review sentiments.
+
+
+Milestone 3	
+Weeks 5-6 
+
+Implemented aspect-based sentiment analysis using rule-based extraction and spaCy parsing. Analyzed aspect sentiments with Hugging Face, VADER, and Pandas.
+
+
+Milestone 4	
+Weeks 7-8 
+
+
+Created interactive dashboards with Streamlit/Dash/Plotly to show sentiment trends over time. Developed the admin interface for managing aspect categories.
+
+
+
+Export to Sheets
+💻 Local Setup and Installation
 Prerequisites
-Ensure you have Python 3.x and pip (the Python package installer) installed on your system.
+Python 3.x
 
-Step 1: Clone the Repository
+Git
+
+Step 1: Clone and Set Up Environment
 Bash
 
 git clone https://github.com/Siddartha8/Infosys-Project1.git
 cd Infosys-Project1
-Step 2: Set Up the Virtual Environment
-It is highly recommended to use a virtual environment to manage dependencies.
 
-Bash
-
-# Create the environment
+# Create and activate virtual environment
 python -m venv venv
-
-# Activate the environment
-# For macOS/Linux:
-source venv/bin/activate
-# For Windows (Command Prompt/PowerShell):
-.\venv\Scripts\activate
-Step 3: Install Dependencies
-All necessary packages are defined in requirements.txt.
-
+source venv/bin/activate  # macOS/Linux
+# .\venv\Scripts\activate # Windows
+Step 2: Install Dependencies
 Bash
 
 pip install -r requirements.txt
-Step 4: Configure NLP Resources (If using NLTK)
-If the sentiment.py module uses NLTK, you may need to download specific data files:
+Step 3: Configure NLP Data
+If NLTK is used for preprocessing or VADER, run the following to download necessary data:
 
 Bash
 
 python
-# Inside the Python interpreter, run:
 import nltk
-nltk.download('vader_lexicon') # If VADER is used
-nltk.download('punkt') # Common requirement
+nltk.download('vader_lexicon')
+nltk.download('punkt')
 exit()
-Step 5: Initialize the Database
-The project uses Alembic to manage the database schema.
-
-Run Migrations: Apply the existing schema definitions to create the tables in your database files (admin.db, reviews.db):
+Step 4: Initialize and Migrate Database
+Apply the database schema defined in models.py using Alembic:
 
 Bash
 
 alembic upgrade head
-Note: This command will read the migration scripts in the migrations/versions folder and create the necessary tables defined in models.py inside the instance/ folder.
-
-Step 6: Run the Application
-Start the web server using the main application file:
+Step 5: Run the Application
+Start the Flask server.
 
 Bash
 
 python app.py
-The application should now be running, typically accessible at: http://127.0.0.1:5000/ (check your console output for the exact address).
+The application will be accessible at the address printed in your console (e.g., http://127.0.0.1:5000/).
 
-🗺️ Project Structure Guide
-File/Folder	Description
-app.py	Main Application Logic. Contains all Flask routes, handles HTTP requests, and orchestrates calls to utilities and models.
-models.py	Database Schema. Defines the SQLAlchemy models (e.g., User, Review) for the application data.
-requirements.txt	Lists all required Python packages.
-templates/	Web Pages. Stores all Jinja HTML files, including base.html, dashboard.html, and all authentication pages.
-static/	Frontend Assets. Contains CSS, JavaScript, and images for styling the application.
-instance/	Local Database. Holds the actual SQLite files (admin.db, reviews.db). This folder should be ignored by Git.
-migrations/	Database Versioning. Contains Alembic configuration (alembic.ini) and version scripts for managing schema changes.
-utils/	Custom Logic. A Python package containing helper modules:
-   sentiment.py	The module containing the core sentiment analysis algorithm or model loading.
-   text_utils.py	Helper functions for cleaning and preparing text data before analysis.
+📊 Application Use Cases
+This system is designed to transform customer feedback into strategic intelligence for target industries:
 
-Export to Sheets
-✍️ How to Contribute
-We welcome contributions to the project!
 
-Fork the repository.
+Product Development: Identify features customers love or dislike.
 
-Create a feature branch (git checkout -b feature/NewFeature).
 
-Commit your changes (git commit -m 'Add new feature').
+Service Improvement: Understand service quality pain points.
 
-Push to the branch (git push origin feature/NewFeature).
 
-Open a Pull Request describing your changes.
+Marketing Strategy: Focus campaigns on positive aspects.
+
+
+Quality Assurance: Monitor product or service quality trends.
+
+
+Target Industries: Consumer Electronics, E-commerce & Retail, Hospitality & Tourism, Financial Services, and Healthcare Services.
+
+🤝 Contribution
+Contributions are welcome! Please feel free to open issues or submit pull requests.
 
 📄 License
 This project is licensed under the [Specify your license, e.g., MIT License] - see the LICENSE file for details.
