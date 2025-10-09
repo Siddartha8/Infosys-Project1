@@ -4,12 +4,17 @@ Infosys-Project1: Customer Review Insight AI
 Customer Review Insight AI is an advanced Natural Language Processing (NLP) system developed during the Infosys Internship 6.0 that addresses the challenge of manually extracting actionable insights from large volumes of customer reviews.
 
 
-Unlike traditional sentiment analysis, which only provides an overall positive or negative score, this project performs Aspect-Based Sentiment Analysis (ABSA). The goal is to identify specific product features or attributes (aspects) and determine the sentiment (positive, negative, or neutral) associated with each one, providing granular, data-driven insights for businesses.
+
+Unlike traditional sentiment analysis, which provides only an overall positive or negative score , this project performs Aspect-Based Sentiment Analysis (ABSA). The goal is to identify specific features or attributes (aspects) and determine the sentiment (positive, negative, or neutral) associated with each one , providing granular, data-driven insights for businesses.
+
 
 
 Team Members & Supervision
 
-Team Members: Aryan Amit Pardeshi, Vinukollu Hima Janani, Kandadi Siddartha, Akasapu Venkata Sai Manikanta Gangadhar Dharshan.
+Team Members: Aryan Amit Pardeshi , Vinukollu Hima Janani , Kandadi Siddartha , Akasapu Venkata Sai Manikanta Gangadhar Dharshan.
+
+
+
 
 
 Supervisor: Mukilan Selvaraj.
@@ -17,47 +22,50 @@ Supervisor: Mukilan Selvaraj.
 ✨ Core Features & Functionality
 The application is structured around the following key modules and features:
 
-Module	Features	Benefit
-NLP Analysis Module		
-Aspect Extraction, Overall Sentiment Analysis, and Aspect-Based Sentiment Analysis using Hugging Face, VADER, and spaCy.
+NLP Analysis Module:
 
 
-Provides granular sentiment insights towards specific aspects.
-
-Data Ingestion	
-Interface for uploading review datasets in CSV or text file format.
+Aspect Extraction: Identify key aspects/features mentioned in reviews.
 
 
-Automated Review Analysis to significantly reduce manual effort.
+Overall Sentiment Analysis: General sentiment score for the entire review.
 
-Authentication & Security	
+
+Aspect-Based Sentiment: Accurately identifies sentiment (positive, negative, neutral) towards specific aspects.
+
+Data Ingestion & Preprocessing:
+
+Interface for uploading review datasets (CSV, text files).
+
+Automated text cleaning, tokenization, and normalization.
+
+Data Aggregation & Insight Generation:
+
+Aggregate sentiment scores per aspect across multiple reviews.
+
+Identify top positive/negative aspects.
+
+Authentication & Security:
+
 User registration and login secured with JWT Authentication.
 
 
+Profile management for datasets and analysis reports.
+
+Visualization & Reporting:
+
+Interactive dashboards with aspect-level sentiment distribution.
 
 
-Secure management of user profiles, datasets, and analysis reports.
+Filter capabilities by aspect, product, or time.
 
-Visualization & Reporting		
-Interactive dashboards (built with Streamlit, Dash, or Plotly) showing sentiment trends over time and aspect-level distribution.
+Admin Dashboard:
 
+Management of review categories/industries.
 
+System usage and performance monitoring.
 
-Delivers Actionable Business Intelligence in a digestible format.
-
-
-
-Admin Dashboard	
-Management of review categories/industries, system usage monitoring, and review of analysis quality.
-
-
-
-Enables effective system maintenance and strategic management of aspect categories.
-
-
-Export to Sheets
-🛠️ Technical Architecture & Stack
-The project relies on a powerful and modern Python stack:
+🛠️ Technical Architecture & Stack 
 
 Category	Technology	Files/Dependencies
 Backend Framework		
@@ -71,15 +79,13 @@ utils/sentiment.py, utils/text_utils.py
 Visualization		
 Streamlit, Dash, or Plotly 
 
-Used for interactive dashboards and reporting.
+Interactive dashboards and reporting.
 Data Processing		
 Pandas 
 
-Used for data cleaning, aggregation, and insight generation.
-
-
+Data cleaning, aggregation, and insight generation.
 Database/ORM		
-SQLAlchemy  (with Alembic migrations)
+SQLAlchemy (with Alembic migrations) 
 
 models.py, instance/, migrations/
 Security		
@@ -92,37 +98,22 @@ Docker, Cloud Platforms (Future)
 
 Export to Sheets
 📅 Implementation Timeline
-The project was executed across four distinct milestones (weeks 1-8):
+The project was executed across four milestones over approximately 8 weeks:
 
-Milestone	Weeks	Key Activities
-Milestone 1	
-Weeks 1-2 
-
-Developed secure user authentication with JWT, login, and profile management. Enabled review data upload via Flask/Streamlit supporting CSV and text inputs.
+Milestone 1 (Weeks 1-2): Developed secure user authentication with JWT, login, and profile management. Enabled review data upload via Flask/Streamlit supporting CSV and text inputs.
 
 
-
-Milestone 2	
-Weeks 3-4 
-
-Implemented a text preprocessing pipeline with NLTK and spaCy. Enhanced the UI to display review sentiments.
-
-
-Milestone 3	
-Weeks 5-6 
-
-Implemented aspect-based sentiment analysis using rule-based extraction and spaCy parsing. Analyzed aspect sentiments with Hugging Face, VADER, and Pandas.
-
-
-Milestone 4	
-Weeks 7-8 
-
-
-Created interactive dashboards with Streamlit/Dash/Plotly to show sentiment trends over time. Developed the admin interface for managing aspect categories.
+Milestone 2 (Weeks 3-4): Implemented a text preprocessing pipeline with NLTK, spaCy, and Hugging Face models. Enhanced the UI to display review sentiments.
 
 
 
-Export to Sheets
+Milestone 3 (Weeks 5-6): Implemented aspect-based sentiment analysis using rule-based extraction and spaCy parsing. Analyzed aspect sentiments with Hugging Face, VADER, and Pandas.
+
+
+
+Milestone 4 (Weeks 7-8): Created interactive dashboards with Streamlit, Dash, or Plotly to show sentiment trends over time. Developed an admin interface for managing aspect categories.
+
+
 💻 Local Setup and Installation
 Prerequisites
 Python 3.x
@@ -144,7 +135,7 @@ Bash
 
 pip install -r requirements.txt
 Step 3: Configure NLP Data
-If NLTK is used for preprocessing or VADER, run the following to download necessary data:
+If the project uses NLTK for VADER sentiment analysis, run the following to download necessary data:
 
 Bash
 
@@ -160,15 +151,16 @@ Bash
 
 alembic upgrade head
 Step 5: Run the Application
-Start the Flask server.
+Start the Flask server:
 
 Bash
 
 python app.py
 The application will be accessible at the address printed in your console (e.g., http://127.0.0.1:5000/).
 
-📊 Application Use Cases
-This system is designed to transform customer feedback into strategic intelligence for target industries:
+📊 Business Impact & Use Cases 
+
+This system is designed to transform customer feedback into strategic intelligence for various target industries  and applications:
 
 
 Product Development: Identify features customers love or dislike.
@@ -180,10 +172,14 @@ Service Improvement: Understand service quality pain points.
 Marketing Strategy: Focus campaigns on positive aspects.
 
 
-Quality Assurance: Monitor product or service quality trends.
+Quality Assurance: Monitor product/service quality trends.
 
 
-Target Industries: Consumer Electronics, E-commerce & Retail, Hospitality & Tourism, Financial Services, and Healthcare Services.
+Target Industries: Consumer Electronics , E-commerce & Retail , Hospitality & Tourism , Financial Services , and Healthcare Services.
+
+
+
+
 
 🤝 Contribution
 Contributions are welcome! Please feel free to open issues or submit pull requests.
