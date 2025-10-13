@@ -403,7 +403,7 @@ table th {
 <div class="container">
 <div id="submitTab" class="tab-content active">
 <h2>Submit Your Review</h2>
-<form id="reviewForm" method="POST" enctype="multipart/form-data" action="{{ url_for('dashboard') }}">
+<form id="reviewForm" method="POST" enctype="multipart/form-data" onsubmit="return validateReviewForm()">
 <textarea id="reviewText" name="review_text" placeholder="Write your review here..."></textarea>
 <label for="rating">Rating:</label>
 <select id="reviewRating" name="rating">
@@ -414,7 +414,8 @@ table th {
 <option value="5">⭐⭐⭐⭐⭐</option>
 </select><br><br>
 <label for="csv_file">Or Upload Reviews CSV (Format: text,rating)</label><br>
-<input type="file" name="csv_file" accept=".csv" /><br><br>
+<input type="file" name="csv_file" id="csvFile" accept=".csv" /><br><br>
+<div id="reviewError" style="color: #dc3545; font-weight: bold; margin-bottom: 15px;"></div>
 <button type="submit">Submit</button>
 </form>
 </div>
@@ -847,6 +848,37 @@ function updateCharts() {
             }
         }
     });
+}
+
+// ------------------------------------
+// NEW VALIDATION FUNCTION
+// ------------------------------------
+function validateReviewForm() {
+    const reviewText = document.getElementById('reviewText').value.trim();
+    const csvFile = document.getElementById('csvFile').files[0];
+    const errorElement = document.getElementById('reviewError');
+    errorElement.textContent = ''; // Clear previous error
+
+    // 1. Check if both text and CSV are empty
+    if (!reviewText && !csvFile) {
+        errorElement.textContent = 'Please enter a review in the text box OR upload a CSV file.';
+        return false;
+    }
+
+    // 2. Check for invalid file type
+    if (csvFile) {
+        // Simple check: get the file name, convert to lowercase, and check the ending
+        const fileName = csvFile.name.toLowerCase();
+        if (!fileName.endsWith('.csv')) {
+            errorElement.textContent = 'Invalid file type. Please upload a **.csv** file.';
+            // Also, clear the file input for a cleaner retry
+            document.getElementById('csvFile').value = '';
+            return false;
+        }
+    }
+
+    // If we reach here, either valid text OR a valid file is present.
+    return true;
 }
 
 // ------------------------------------

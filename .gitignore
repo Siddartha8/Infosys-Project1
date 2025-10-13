@@ -1,0 +1,13 @@
+# Python virtual environment folder
+env/
+venv/
+
+# macOS directory services files
+.DS_Store
+
+# Python compiled files
+__pycache__/
+*.pyc
+
+# IDE files (e.g., VS Code settings)
+.vscode/
