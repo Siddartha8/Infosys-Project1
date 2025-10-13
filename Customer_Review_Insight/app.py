@@ -118,7 +118,7 @@ class Feedback(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('admin.id'))
     category = db.Column(db.String(50))
     message = db.Column(db.Text)
-    attachment = db.Column(db.String(200)) 	# file path
+    attachment = db.Column(db.String(200))  # file path
     status = db.Column(db.String(20), default="Pending")
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
@@ -379,7 +379,7 @@ def update_feedback_status(feedback_id):
         
     return jsonify({"success": False, "message": "Invalid status"}), 400
 
-# ==================== Main routes (UNCHANGED LOGIC, ONLY REDIRECTS) ====================
+# ==================== Main routes ====================
 
 @app.route("/")
 def home():
@@ -395,18 +395,32 @@ def register():
         username = request.form.get("username")
         email = request.form.get("email")
         password = request.form.get("password")
+        
         if not username or not email or not password:
             flash("All fields are required!", "danger")
-            return redirect(url_for("register"))
+            # Changed redirect to render_template for better error display
+            return render_template("register.html")
+        
         if User.query.filter((User.username == username) | (User.email == email)).first():
             flash("User already exists!", "danger")
-            return redirect(url_for("register"))
+            # Changed redirect to render_template for better error display
+            return render_template("register.html")
+            
         user = User(username=username, email=email)
         user.set_password(password)
         db.session.add(user)
         db.session.commit()
-        flash("Registration successful! Please login.", "success")
+        
+        # --- CRITICAL FIX: Use manual session for guaranteed message delivery ---
+        # Store the success message and category in a custom session variable
+        session['register_success'] = {
+            'message': "Registration successful! Please login.",
+            'category': "success"
+        }
+        # ----------------------------------------------------------------------
+        
         return redirect(url_for("login"))
+        
     return render_template("register.html")
 
 @app.route("/login", methods=["GET", "POST"])

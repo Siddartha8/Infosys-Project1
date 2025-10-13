@@ -1,182 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #000;
-      margin: 0; padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        /* --- POP-UP MESSAGE STYLES --- */
+        .flash-container {
+            position: fixed; 
+            top: 20px; 
+            left: 50%;
+            transform: translateX(-50%); 
+            width: 90%;
+            max-width: 500px;
+            z-index: 1000; 
+        }
 
-    .wrapper {
-      display: flex;
-      gap: 50px;
-      align-items: center;
-      justify-content: center;
-    }
+        .flash-message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 16px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            animation: fadeinout 5s ease-in-out forwards;
+        }
+        
+        /* Success Pop-up Style (Green/Teal for registration success) */
+        .flash-success {
+            background: linear-gradient(90deg, #43cea2, #185a9d);
+            color: white;
+            border: 1px solid #43cea2;
+        }
 
-    .container {
-      max-width: 400px;
-      background: #1f1f1f;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
-      color: #fff;
-    }
+        /* Danger/Error Style (for login failure) */
+        .flash-danger {
+            background-color: #dc3545; 
+            color: white;
+            border: 1px solid #721c24; 
+        }
+        
+        /* Animation for the pop-up to automatically fade away */
+        @keyframes fadeinout {
+            0% { opacity: 0; top: 0px; } 
+            10% { opacity: 1; top: 20px; }
+            90% { opacity: 1; top: 20px; } 
+            100% { opacity: 0; visibility: hidden; }
+        }
+        /* --- END POP-UP MESSAGE STYLES --- */
 
-    h2 {
-      text-align: center;
-      margin-bottom: 25px;
-      color: #fff;
-    }
 
-    input[type="text"], input[type="password"] {
-      width: 100%;
-      padding: 12px;
-      margin: 8px 0 5px 0;
-      border: 1px solid #444;
-      border-radius: 8px;
-      font-size: 15px;
-      background: #2a2a2a;
-      color: #fff;
-      box-sizing: border-box;
-    }
+        body {
+            font-family: Arial, sans-serif;
+            background: #000;
+            margin: 0; padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
-    .error {
-      border: 2px solid #dc3545 !important;
-    }
+        .wrapper {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+            justify-content: center;
+        }
 
-    .error-message {
-      color: #dc3545;
-      font-size: 13px;
-      margin-bottom: 10px;
-      display: none;
-    }
+        .container {
+            max-width: 400px;
+            background: #1f1f1f;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+            color: #fff;
+        }
 
-    input::placeholder {
-      color: #bbb;
-    }
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #fff;
+        }
 
-    button {
-      width: 100%;
-      padding: 12px;
-      background: linear-gradient(135deg, #43cea2, #185a9d);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0 5px 0;
+            border: 1px solid #444;
+            border-radius: 8px;
+            font-size: 15px;
+            background: #2a2a2a;
+            color: #fff;
+            box-sizing: border-box;
+        }
 
-    button:hover {
-      transform: scale(1.05);
-    }
+        .error {
+            border: 2px solid #dc3545 !important;
+        }
 
-    p {
-      text-align: center;
-      margin-top: 15px;
-      font-size: 14px;
-      color: #bbb;
-    }
+        .error-message {
+            color: #dc3545;
+            font-size: 13px;
+            margin-bottom: 10px;
+            display: none;
+        }
 
-    a {
-      color: #3b82f6;
-      text-decoration: none;
-    }
+        input::placeholder {
+            color: #bbb;
+        }
 
-    a:hover {
-      text-decoration: underline;
-    }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #43cea2, #185a9d);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
 
-    /* Flash error box */
-    .flash-danger {
-      background: #f8d7da;
-      color: #721c24;
-      padding: 10px;
-      border-radius: 6px;
-      margin-bottom: 10px;
-      border: 1px solid #f5c6cb;
-      font-size: 14px;
-    }
+        button:hover {
+            transform: scale(1.05);
+        }
 
-    .illustration img {
-      max-width: 400px;
-      border-radius: 12px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.5);
-    }
+        p {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+            color: #bbb;
+        }
 
-    @media (max-width: 900px) {
-      .wrapper {
-        flex-direction: column;
-        gap: 30px;
-      }
-    }
-  </style>
+        a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .illustration img {
+            max-width: 400px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+        }
+
+        @media (max-width: 900px) {
+            .wrapper {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="wrapper">
-    <!-- Illustration -->
-    <div class="illustration">
-      <img src="{{ url_for('static', filename='images/2683408.jpg') }}" alt="Login Illustration">
-    </div>
-
-    <!-- Login Box -->
-    <div class="container">
-      <h2>Login</h2>
-
-      <!-- Flash Message -->
-      {% with messages = get_flashed_messages(category_filter=['danger']) %}
+    
+    <!-- STANDARD FLASH MESSAGE BLOCK (FOR LOGIN ERRORS) -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
-          <div class="flash-danger">{{ messages[0] }}</div>
+            <div class="flash-container">
+            {% for category, message in messages %}
+                <div class="flash-message flash-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            </div>
         {% endif %}
-      {% endwith %}
+    {% endwith %}
+    <!-- END STANDARD FLASH MESSAGE BLOCK -->
 
-      <form id="loginForm" method="POST" action="{{ url_for('login') }}">
-        <input type="text" id="email" name="email" placeholder="Enter your email">
-        <div id="emailError" class="error-message">⚠ Email is required</div>
+    <!-- FIX: MANUAL SESSION CHECK FOR REGISTRATION SUCCESS POPUP -->
+    {% if 'register_success' in session %}
+        <div class="flash-container">
+            <div class="flash-message flash-{{ session.register_success.category }}">
+                {{ session.register_success.message }}
+            </div>
+        </div>
+        <!-- Clear the session message immediately after displaying it once -->
+        {% set _ = session.pop('register_success', None) %}
+    {% endif %}
+    <!-- END FIX -->
 
-        <input type="password" id="password" name="password" placeholder="Enter your password">
-        <div id="passwordError" class="error-message">⚠ Password is required</div>
 
-        <button type="submit">Login</button>
-      </form>
+    <div class="wrapper">
+        <!-- Illustration -->
+        <div class="illustration">
+            <img src="{{ url_for('static', filename='images/2683408.jpg') }}" alt="Login Illustration">
+        </div>
 
-      <p>Don't have an account? 
-        <a href="{{ url_for('register') }}">Register here</a>
-      </p>
+        <!-- Login Box -->
+        <div class="container">
+            <h2>Login</h2>
+            
+            <form id="loginForm" method="POST" action="{{ url_for('login') }}">
+                <input type="text" id="email" name="email" placeholder="Enter your email">
+                <div id="emailError" class="error-message">⚠ Email is required</div>
+
+                <input type="password" id="password" name="password" placeholder="Enter your password">
+                <div id="passwordError" class="error-message">⚠ Password is required</div>
+
+                <button type="submit">Login</button>
+            </form>
+
+            <p>Don't have an account? 
+                <a href="{{ url_for('register') }}">Register here</a>
+            </p>
+        </div>
     </div>
-  </div>
 
-  <script>
-    document.getElementById("loginForm").addEventListener("submit", function(event) {
-      let valid = true;
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            let valid = true;
 
-      function checkField(id, errorId) {
-        let input = document.getElementById(id);
-        let error = document.getElementById(errorId);
-        if (input.value.trim() === "") {
-          input.classList.add("error");
-          error.style.display = "block";
-          valid = false;
-        } else {
-          input.classList.remove("error");
-          error.style.display = "none";
-        }
-      }
+            function checkField(id, errorId) {
+                let input = document.getElementById(id);
+                let error = document.getElementById(errorId);
+                if (input.value.trim() === "") {
+                    input.classList.add("error");
+                    error.style.display = "block";
+                    valid = false;
+                } else {
+                    input.classList.remove("error");
+                    error.style.display = "none";
+                }
+            }
 
-      checkField("email", "emailError");
-      checkField("password", "passwordError");
+            checkField("email", "emailError");
+            checkField("password", "passwordError");
 
-      if (!valid) event.preventDefault();
-    });
-  </script>
+            if (!valid) event.preventDefault();
+        });
+    </script>
 </body>
 </html>
