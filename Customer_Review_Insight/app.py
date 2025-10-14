@@ -403,7 +403,6 @@ def register():
         
         if User.query.filter((User.username == username) | (User.email == email)).first():
             flash("User already exists!", "danger")
-            # Changed redirect to render_template for better error display
             return render_template("register.html")
             
         user = User(username=username, email=email)
@@ -450,6 +449,13 @@ def dashboard():
     if request.method == "POST":
         text = request.form.get("review_text")
         rating = request.form.get("rating")
+        
+        # FIX: Check if rating is an empty string (from the new default "None" option) and set it to 0
+        if rating is None or rating == "":
+            rating_val = 0
+        else:
+            rating_val = int(rating)
+            
         if text:
             clean_txt = cleaned_string(text)
             tokenized_txt = " ".join(clean_txt.split())
@@ -458,7 +464,7 @@ def dashboard():
             review = Review(
                 user_id=user.id,
                 text=text,
-                rating=int(rating),
+                rating=rating_val, # Use the determined rating value (0 for None)
                 sentiment_label=sentiment["label"],
                 sentiment_score=sentiment["score"],
                 original_text=text,
@@ -481,6 +487,15 @@ def dashboard():
                     raw = row.get("text", "")
                     if not raw:
                         continue
+                    
+                    # Handle rating from CSV: default to 0 if missing or invalid
+                    csv_rating = row.get("rating", 0)
+                    try:
+                        # Ensures "None" or blank strings from CSV result in rating 0
+                        csv_rating_val = int(csv_rating) if csv_rating else 0 
+                    except ValueError:
+                        csv_rating_val = 0
+                        
                     clean_txt = cleaned_string(raw)
                     tokenized_txt = " ".join(clean_txt.split())
                     processed_txt = tokenized_txt.lower()
@@ -488,7 +503,7 @@ def dashboard():
                     review = Review(
                         user_id=user.id,
                         text=raw,
-                        rating=int(row.get("rating", 0)),
+                        rating=csv_rating_val,
                         source=row.get("source", "csv"),
                         sentiment_label=sent["label"],
                         sentiment_score=sent["score"],
@@ -699,6 +714,14 @@ def admin_dashboard():
                     raw = row.get("text", "")
                     if not raw:
                         continue
+                    
+                    # Handle rating from CSV: default to 0 if missing or invalid
+                    csv_rating = row.get("rating", 0)
+                    try:
+                        csv_rating_val = int(csv_rating) if csv_rating else 0
+                    except ValueError:
+                        csv_rating_val = 0
+                        
                     clean_txt = cleaned_string(raw)
                     tokenized_txt = " ".join(clean_txt.split())
                     processed_txt = tokenized_txt.lower()
@@ -706,7 +729,7 @@ def admin_dashboard():
                     review = Review(
                         user_id=user_id_to_use,
                         text=raw,
-                        rating=int(row.get("rating", 0)),
+                        rating=csv_rating_val,
                         source=row.get("source", "csv"),
                         sentiment_label=sent["label"],
                         sentiment_score=sent["score"],

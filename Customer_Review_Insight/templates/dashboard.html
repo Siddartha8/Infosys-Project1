@@ -405,13 +405,15 @@ table th {
 <h2>Submit Your Review</h2>
 <form id="reviewForm" method="POST" enctype="multipart/form-data" onsubmit="return validateReviewForm()">
 <textarea id="reviewText" name="review_text" placeholder="Write your review here..."></textarea>
-<label for="rating">Rating (Used for context/filtering only):</label>
+<label for="rating">Rating (Optional):</label>
 <select id="reviewRating" name="rating">
-<option value="1">⭐</option>
-<option value="2">⭐⭐</option>
-<option value="3">⭐⭐⭐</option>
-<option value="4">⭐⭐⭐⭐</option>
-<option value="5">⭐⭐⭐⭐⭐</option>
+    <!-- UPDATED: Changed display text to "None" -->
+    <option value="" selected>None</option>
+    <option value="1">⭐</option>
+    <option value="2">⭐⭐</option>
+    <option value="3">⭐⭐⭐</option>
+    <option value="4">⭐⭐⭐⭐</option>
+    <option value="5">⭐⭐⭐⭐⭐</option>
 </select><br><br>
 <label for="csv_file">Or Upload Reviews CSV (Format: text,rating)</label><br>
 <input type="file" name="csv_file" id="csvFile" accept=".csv" /><br><br>
