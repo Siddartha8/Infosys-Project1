@@ -405,7 +405,7 @@ table th {
 <h2>Submit Your Review</h2>
 <form id="reviewForm" method="POST" enctype="multipart/form-data" onsubmit="return validateReviewForm()">
 <textarea id="reviewText" name="review_text" placeholder="Write your review here..."></textarea>
-<label for="rating">Rating:</label>
+<label for="rating">Rating (Used for context/filtering only):</label>
 <select id="reviewRating" name="rating">
 <option value="1">⭐</option>
 <option value="2">⭐⭐</option>
@@ -437,11 +437,11 @@ table th {
 <a href="{{ url_for('generate_report') }}" class="btn-report">Download CSV Report</a>
 <a href="{{ url_for('generate_pdf_report') }}" class="btn-report">Download PDF Report</a>
 </div>
-<h2>Analytics Overview</h2>
+<h2>Model Sentiment Analysis Overview</h2>
 <table>
 <thead>
 <tr>
-<th>Sentiment</th>
+<th>Sentiment (Model)</th>
 <th>Count</th>
 <th>Percentage</th>
 </tr>
@@ -499,7 +499,15 @@ table th {
     <div class="chart-box">
     <div style="text-align:center; margin: 32px auto; background:#2a2a2a; padding: 22px; border-radius: 12px; box-shadow: 0 2px 6px #000a;">
       <canvas id="userSentimentChart" style="max-width:220px; max-height:220px; margin:auto;"></canvas>
-      <p><strong>Positive:</strong> {{ user_pos_count }} | <strong>Negative:</strong> {{ user_neg_count }} | <strong>Neutral:</strong> {{ user_neu_count }}</p>
+      <!-- UPDATED: Professional display of sentiment counts using a list structure -->
+      <div style="font-size: 1.1em; padding-top: 10px; border-top: 1px solid #333; margin-top: 10px; color: #ddd;">
+        <p style="margin: 5px 0; font-size: 0.9em; font-weight: 500;">Sentiment Count (Model):</p>
+        <ul style="list-style: none; padding: 0; display: flex; justify-content: space-around; font-weight: bold; margin: 0; font-size: 0.95em;">
+            <li style="color: #43cea2;">Positive: {{ user_pos_count }}</li>
+            <li style="color: #dc3545;">Negative: {{ user_neg_count }}</li>
+            <li style="color: #ffc107;">Neutral: {{ user_neu_count }}</li>
+        </ul>
+      </div>
     </div>
   </div>
     <div class="chart-box">
@@ -655,6 +663,7 @@ function toggleTheme() {
 }
 
 // Data from backend
+// These variables now contain counts based on the model's sentiment_label
 const userPos = {{ user_pos_count }};
 const userNeg = {{ user_neg_count }};
 const userNeu = {{ user_neu_count }};
@@ -690,7 +699,7 @@ function drawCharts() {
             responsive: true,
             plugins: {
                 legend: { display: false },
-                title: { text: 'Your Sentiment Distribution', color: '#e0e0e0', display: true }
+                title: { text: 'Your Sentiment Distribution (Model)', color: '#e0e0e0', display: true }
             }
         }
     });

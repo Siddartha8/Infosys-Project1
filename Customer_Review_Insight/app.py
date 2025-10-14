@@ -528,9 +528,10 @@ def dashboard():
         # ADDED: Attach the overall sentiment label to the object for display
         setattr(r, "overall_sentiment", r.sentiment_label or "Neutral")
 
-    user_pos_count = sum(1 for r in reviews if r.rating and r.rating >= 4)
-    user_neg_count = sum(1 for r in reviews if r.rating and r.rating <= 2)
-    user_neu_count = sum(1 for r in reviews if r.rating and r.rating == 3)
+    # --- UPDATED: Calculate sentiment distribution based on model's sentiment_label ---
+    user_pos_count = sum(1 for r in reviews if r.sentiment_label and r.sentiment_label.lower() == 'positive')
+    user_neg_count = sum(1 for r in reviews if r.sentiment_label and r.sentiment_label.lower() == 'negative')
+    user_neu_count = sum(1 for r in reviews if r.sentiment_label and r.sentiment_label.lower() == 'neutral')
     
     # --- NEW METRICS FOR DASHBOARD ---
     user_reviews_submitted = len(reviews)
@@ -734,9 +735,9 @@ def admin_dashboard():
             return redirect(url_for("admin_dashboard"))
 
     # Count stats for Analytics tab (must run for GET and POST fallback)
-    pos_count = sum(1 for r in reviews if r.rating and r.rating >= 4)
-    neg_count = sum(1 for r in reviews if r.rating and r.rating <= 2)
-    neu_count = sum(1 for r in reviews if r.rating and 2 < r.rating < 4)
+    pos_count = sum(1 for r in reviews if r.sentiment_label and r.sentiment_label.lower() == 'positive')
+    neg_count = sum(1 for r in reviews if r.sentiment_label and r.sentiment_label.lower() == 'negative')
+    neu_count = sum(1 for r in reviews if r.sentiment_label and r.sentiment_label.lower() == 'neutral')
     admin_aspect_data = analyze_aspect_sentiment(reviews)
 
     reviews_by_user = {}
@@ -1094,7 +1095,7 @@ def generate_report():
     writer.writerow([])
 
     # Sentiment distribution
-    writer.writerow(["Sentiment Distribution"])
+    writer.writerow(["Sentiment Distribution (Model Analysis)"])
     total = total_reviews if total_reviews > 0 else 1
     for sentiment, count in sentiment_counts.items():
         percent = (count / total) * 100
@@ -1174,7 +1175,7 @@ def generate_pdf_report():
 
     # Sentiment distribution
     c.setFont("Helvetica-Bold", 14)
-    c.drawString(50, y, "Sentiment Distribution")
+    c.drawString(50, y, "Sentiment Distribution (Model Analysis)")
     y -= 20
     total = total_reviews if total_reviews > 0 else 1
     for sentiment, count in sentiment_counts.items():
