@@ -425,6 +425,11 @@ def register():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    # --- FIX: Clear any residual standard flash messages (like Admin success) on page load (GET) ---
+    if request.method == "GET":
+        # Clear the standard flash message session key
+        _ = session.pop('_flashes', None) 
+        
     if request.method == "POST":
         email = request.form.get("email")
         password = request.form.get("password")
@@ -599,6 +604,11 @@ def logout():
 
 @app.route("/admin_login", methods=["GET", "POST"])
 def admin_login():
+    # --- FIX: Clear any residual standard flash messages (like User success) on page load (GET) ---
+    if request.method == "GET":
+        # Clear the standard flash message session key
+        _ = session.pop('_flashes', None)
+
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
