@@ -141,7 +141,7 @@ Kandadi Siddartha
 Final Year B.Tech (CSE)   
 Sree Dattha Institute of Engineering and Science, Hyderabad  
 [siddharthakandadi@gmail.com](mailto:siddharthakandadi@gmail.com)  
-LinkedIn: [https://linkedin.com/in/siddartha-kandadi-90593326b](https://linkedin.com/in/siddartha-kandadi-90593326b)
+LinkedIn: [https://linkedin.com/in/siddartha-kandadi-90593326b](https://linkedin.com/in/siddarthakandadi)
 
 ---
 
